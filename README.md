@@ -50,7 +50,7 @@ After that, you can view the result of training via ```./logs/<data name>/<proje
 
 The testing can be done via ```bash runtest.sh``` or you can run file ```test.py```
 
-You can download our weights from [Google Drive](https://drive.google.com/drive/folders/1tCeLize-zOs8kp3J1146qjwfSrXI047s?usp=drive_link)
+You can download our weights or base weight for pose and training from [Google Drive](https://drive.google.com/drive/folders/1Oi3_6bOu8mfZVj_ByeYI788fxqRyHo_J?usp=drive_link)
 
 The following command can be used to test:
 ```
@@ -67,3 +67,6 @@ The result in test dataset can be found in our paper, below is the visualization
         <img src="Figure/vis_att.png" width="79%"/>
     </a>
 </div>
+
+## Citation
+Coming soon

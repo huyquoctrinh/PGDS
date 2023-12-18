@@ -10,7 +10,7 @@ from utils.logger import setup_logger
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="ReID Baseline Training")
     parser.add_argument(
-        "--config_file", default="", help="path to config file", type=str
+        "--config_file", default="/home/nhdang/ReID_backup/configs/market/swin_tiny.yml", help="path to config file", type=str
     )
     parser.add_argument("opts", help="Modify config options using the command-line", default=None,
                         nargs=argparse.REMAINDER)

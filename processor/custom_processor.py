@@ -38,6 +38,7 @@ def do_train(cfg,
     logger.info('start training')
     cls_loss = torch.nn.CrossEntropyLoss()
     kl_loss = torch.nn.KLDivLoss(reduction = 'batchmean')
+    pose_model.eval()
     _LOCAL_PROCESS_GROUP = None
     if device:
         model.to(local_rank)
@@ -75,23 +76,20 @@ def do_train(cfg,
             target_cam = target_cam.to(device)
             target_view = target_view.to(device)
             
-            with amp.autocast(enabled=True):
+            with torch.cuda.amp.autocast(enabled=True, dtype=torch.float16) as autocast, torch.backends.cuda.sdp_kernel(enable_flash=False) as disable :
                 
-                score, feat, _ = model(img, label=target, cam_label=target_cam, view_label=target_view ) 
+                score, feat, local_feat1, local_feat2, local_feat3 = model(img, label=target, cam_label=target_cam, view_label=target_view ) 
                 
                 pose_score, pose_feat = pose_model(img)
-                feat = F.normalize(feat, p=2, dim=1)
                 
-                divergence_loss = kl_loss(torch.nn.functional.softmax(pose_feat,1)/2, torch.nn.functional.softmax(feat,1)/2)
-                # pose_loss = 0.8*loss_fn(pose_score, pose_feat, target, target_cam) + 0.2 * arc_criterion(pose_score, target)
-                # arc_loss = 
-                # print(arc_loss)
-                # loss = loss_fn(score, feat, target, target_cam) + cls_loss(score, target)        # loss = 0.8*loss_fn(score, feat, target, target_cam) + 
-                # print(loss)
-                loss = 0.8*loss_fn(score, feat, target, target_cam) + 0.2* divergence_loss
-            # pose_loss.backward(retain_graph=True)
-            # pose_opt.step()
-            
+                divergence_loss1 = kl_loss(torch.nn.functional.softmax(pose_feat,1), torch.nn.functional.softmax(local_feat1,1))/2
+
+                divergence_loss2 = kl_loss(torch.nn.functional.softmax(pose_feat,1), torch.nn.functional.softmax(local_feat2,1))/2
+
+                divergence_loss3 = kl_loss(torch.nn.functional.softmax(pose_feat,1), torch.nn.functional.softmax(local_feat3,1))/2
+
+                loss = 0.8*loss_fn(score, feat, target, target_cam) + + 0.2* (0.5 *divergence_loss1 + 0.3*divergence_loss2 + 0.2*divergence_loss3)
+   
             scaler.scale(loss).backward()
             scaler.step(optimizer)
             scaler.update()
