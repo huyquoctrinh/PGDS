@@ -152,14 +152,41 @@ class Backbone(nn.Module):
                 self.state_dict()[i].copy_(param_dict[i])
         print('Loading pretrained model from {}'.format(trained_path))
 
-    #  def load_param(self, trained_path):
-        #  param_dict = torch.load(trained_path, map_location = 'cpu')
-        #  for i in param_dict:
-            #  try:
-                #  self.state_dict()[i.replace('module.', '')].copy_(param_dict[i])
-            #  except:
-                #  continue
-        #  print('Loading pretrained model from {}'.format(trained_path))
+
+class TTK(nn.Module):
+    def __init__(self, inp_dim, inp_c, num_head = 8, d_model = 768, emb_size=768):
+        super(TTK, self).__init__()
+        self.emb_size = emb_size
+        self.transformer_layers = nn.TransformerEncoderLayer(d_model = d_model, nhead=8)
+        # self.transformer_encoder = nn.TransformerEncoder(transformer_layers, num_layers=1)
+        self.linear = torch.nn.Linear(inp_dim, emb_size)
+        self.reduce = torch.nn.Linear(inp_c, num_head)
+        self.relu = torch.nn.ReLU()
+    def forward(self, x):
+
+        b, c, w , h = x.shape
+
+        x = x.reshape(b, c, -1)
+        # print(x.shape)
+
+        x = x.transpose(2, 1)
+        x = self.reduce(x)
+        x = x.transpose(2, 1)
+        # print(x.shape)
+        x_tokens = self.linear(x)
+
+        # x_tokens = self.relu(x_tokens)
+
+        x_ttk = self.transformer_layers(x_tokens)
+
+        x_ttk = torch.mean(x_ttk, 1)
+
+        # x_ttk = self.relu(x_ttk)
+
+        x_ttk = torch.nn.functional.normalize(x_ttk, p=2.0, dim=1)
+        # print(x_ttk.shape)
+        return x_ttk
+
 
 
 class build_transformer(nn.Module):
@@ -225,6 +252,12 @@ class build_transformer(nn.Module):
 
         self.dropout = nn.Dropout(self.dropout_rate)
 
+        self.ttk1 = TTK(inp_dim = 96*32, inp_c = 96,  num_head = 16, d_model = 768, emb_size=768) 
+
+        self.ttk2 = TTK(inp_dim = 48*16, inp_c = 192,  num_head = 16, d_model = 768, emb_size=768) 
+
+        self.ttk3 = TTK(inp_dim = 24*8, inp_c = 384, num_head = 16, d_model = 768, emb_size=768) 
+
         if pretrain_choice == 'self':
            self.load_param(model_path)
 
@@ -241,7 +274,17 @@ class build_transformer(nn.Module):
             else:
                 cls_score = self.classifier(feat_cls)
 
-            return cls_score, global_feat, featmaps  # global feature for triplet loss
+
+            # b, n, w, h = 
+            # print(global_feat.shape)
+            # print(featmaps[0].shape, featmaps[1].shape, featmaps[2].shape)
+
+            local_feat1 = self.ttk1(featmaps[0])
+            local_feat2 = self.ttk2(featmaps[1])
+            local_feat3 = self.ttk3(featmaps[2])
+
+
+            return cls_score, global_feat, local_feat1, local_feat2, local_feat3  # global feature for triplet loss
         else:
             if self.neck_feat == 'after':
                 # print("Test with feature after BN")

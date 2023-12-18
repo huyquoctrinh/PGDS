@@ -4,7 +4,7 @@ from model import make_model
 from solver import make_optimizer, WarmupMultiStepLR
 from solver.scheduler_factory import create_scheduler
 from loss import make_loss
-from processor import do_train
+from processor.custom_processor import do_train
 import random
 import torch
 import numpy as np
@@ -12,6 +12,11 @@ import os
 import argparse
 from config import cfg
 import torch.distributed as dist
+import torch
+from pytorchOpenpose.src.model import bodypose_model, body_pose_reid
+from pytorchOpenpose.src import util
+import cv2
+from cloth_changing import PoseSolider
 
 def set_seed(seed):
     torch.manual_seed(seed)
@@ -26,7 +31,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description="ReID Baseline Training")
     parser.add_argument(
-        "--config_file", default="", help="path to config file", type=str
+        "--config_file", default="./configs/market/swin_tiny.yml", help="path to config file", type=str
     )
 
     parser.add_argument("opts", help="Modify config options using the command-line", default=None,
@@ -68,8 +73,19 @@ if __name__ == '__main__':
     os.environ['CUDA_VISIBLE_DEVICES'] = cfg.MODEL.DEVICE_ID
     train_loader, train_loader_normal, val_loader, num_query, num_classes, camera_num, view_num = make_dataloader(cfg)
 
-    model = make_model(cfg, num_class=num_classes, camera_num=camera_num, view_num = view_num, semantic_weight = cfg.MODEL.SEMANTIC_WEIGHT)
-    loss_func, center_criterion = make_loss(cfg, num_classes=num_classes)
+    model_path = "./base_weights/swin_tiny.pth"
+    model = make_model(cfg, num_class=num_classes, camera_num=camera_num, view_num = view_num, semantic_weight = cfg.MODEL.SEMANTIC_WEIGHT, model_path = model_path)
+
+    pose_model_path = "./base_weights/body_pose_model.pth"
+    pose_model = bodypose_model()
+ 
+    pose_model_dict = util.transfer(pose_model, torch.load(pose_model_path))
+    pose_model.load_state_dict(pose_model_dict)
+    pose_reid = body_pose_reid(pose_model)
+    for param in pose_reid.parameters():
+        param.requires_grad = False
+
+    loss_func, center_criterion, koleo_criterion, arc_loss = make_loss(cfg, num_classes=num_classes)
     optimizer, optimizer_center = make_optimizer(cfg, model, center_criterion)
 
     if cfg.SOLVER.WARMUP_METHOD == 'cosine':
@@ -84,7 +100,10 @@ if __name__ == '__main__':
     do_train(
         cfg,
         model,
+        pose_reid,
         center_criterion,
+        koleo_criterion,
+        arc_loss,
         train_loader,
         val_loader,
         optimizer,

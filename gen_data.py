@@ -1,0 +1,1 @@
+from shutil import copyfile(src, dst, *, follow_symlinks=True)

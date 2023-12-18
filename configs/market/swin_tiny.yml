@@ -1,6 +1,6 @@
 MODEL:
-  PRETRAIN_PATH: '/storage/huytq14/multpersonTracking/SOLIDER-REID/base_weights/swin_tiny.pth'
-  # PRETRAIN_PATH: /storage/huytq14/multpersonTracking/SOLIDER-REID/base_weights/swin_small.pth
+  PRETRAIN_PATH: '/home/nhdang/ReID_backup/base_weights/swin_tiny.pth'
+  # /storage/huytq14/multpersonTracking/SOLIDER-REID/base_weights/swin_tiny_tea.pth
   PRETRAIN_CHOICE: 'self'
   SEMANTIC_WEIGHT: 0.2
   PRETRAIN_HW_RATIO: 2
@@ -9,8 +9,8 @@ MODEL:
   IF_WITH_CENTER: 'yes'
   NAME: 'transformer'
   NO_MARGIN: True
-  DEVICE_ID: ('1')
-  TRANSFORMER_TYPE: 'swin_small_patch4_window7_224'
+  DEVICE_ID: ('0')
+  TRANSFORMER_TYPE: 'swin_tiny_patch4_window7_224'
   STRIDE_SIZE: [16, 16]
 INPUT:
   SIZE_TRAIN: [384, 128]
@@ -24,7 +24,7 @@ INPUT:
 DATASETS:
   NAMES: ('market1501')
   # NAMES: ['CelebReID','market1501','duke', 'cuhk03']
-  ROOT_DIR: ('/storage/huytq14/multpersonTracking/SOLIDER-REID/train_data')
+  ROOT_DIR: ('/home/nhdang/person_reid/dataset/')
 
 DATALOADER:
   SAMPLER: 'softmax_triplet'
@@ -45,13 +45,13 @@ SOLVER:
   WEIGHT_DECAY:  1e-4
   WEIGHT_DECAY_BIAS: 1e-4
   BIAS_LR_FACTOR: 2
-  TRP_L2: False
+  TRP_L2: True
 
 TEST:
   EVAL: True
   IMS_PER_BATCH: 128
   RE_RANKING: True
-  WEIGHT: '/storage/huytq14/multpersonTracking/SOLIDER-REID/log/duke/swin_small_market_pose_kl/transformer_30.pth'
+  WEIGHT: '/home/nhdang/ReID_backup/log/deployment/swin_tiny_market_msmt_cls_pose/transformer_170.pth'
   FEAT_NORM: 'yes'
 
-OUTPUT_DIR: './log/duke/swin_small_duke_pose_paper/'
+OUTPUT_DIR: './log/market1501/swin_pose_kl'
