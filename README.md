@@ -1,7 +1,7 @@
 
 # PGS: Pose-Guided Supervision for Mitigating Clothes-Changing in Person Re-Identification
 
-This is the official repository of the paper "**PGS: Pose-Guided Supervision for Mitigating Clothes-Changing in Person Re-Identification**" [![Arxiv Page](https://img.shields.io/badge/Arxiv-2207.00794-red?style=flat-square)](https://arxiv.org/abs/2312.05634)
+This is the official repository of the paper "**PGS: Pose-Guided Supervision for Mitigating Clothes-Changing in Person Re-Identification**" [![Arxiv Page](https://img.shields.io/badge/Arxiv-2312.05634-red?style=flat-square)](https://arxiv.org/abs/2312.05634)
 
 <b>Authors:</b> Quoc-Huy Trinh, Nhat-Tan Bui, Dinh-Hieu Hoang, Phuoc-Thao Vo Thi, Hai-Dang Nguyen, Debesh Jha, Ulas Bagci, Ngan Le, Minh-Triet Tran
 
@@ -70,4 +70,11 @@ The result in test dataset can be found in our paper, below is the visualization
 </div>
 
 ## Citation
-Coming soon
+```
+@article{pgs,
+      title={PGS: Pose-Guided Supervision for Mitigating Clothes-Changing in Person Re-Identification}, 
+      author={Quoc-Huy Trinh and Nhat-Tan Bui and Dinh-Hieu Hoang and Phuoc-Thao Vo Thi and Hai-Dang Nguyen and Debesh Jha and Ulas Bagci and Ngan Le and Minh-Triet Tran},
+      journal={arXiv:2312.05634},
+      year={2023}
+}
+```
