@@ -1,8 +1,9 @@
 
-# Pose Guidance by Supervision (PGS): A Framework for Clothes-Changing Person Re-Identification
-This is an official implementation of PGS: A Framework for Clothes-Changing Person Re-Identification
+# PGS: Pose-Guided Supervision for Mitigating Clothes-Changing in Person Re-Identification
 
-<b>Author:</b> Quoc-Huy Trinh, Nhat-Tan Bui, Phuoc-Thao Vo Thi, Debesh Jha, Ulas Bagci, Minh-Triet Tran, Hai-Dang Nguyen
+This is the official repository of the paper "**PGS: Pose-Guided Supervision for Mitigating Clothes-Changing in Person Re-Identification**" [![Arxiv Page](https://img.shields.io/badge/Arxiv-2207.00794-red?style=flat-square)](https://arxiv.org/abs/2312.05634)
+
+<b>Authors:</b> Quoc-Huy Trinh, Nhat-Tan Bui, Dinh-Hieu Hoang, Phuoc-Thao Vo Thi, Hai-Dang Nguyen, Debesh Jha, Ulas Bagci, Ngan Le, Minh-Triet Tran
 
 ## Overview
 
