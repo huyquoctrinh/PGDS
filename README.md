@@ -7,7 +7,7 @@ This is the official repository of the paper "**PGDS: Pose-Guided Deep Supervisi
 
 ## Overview
 
-Below is the visualization of our method
+Person Re-Identification (Re-ID) task seeks to enhance the tracking of multiple individuals by surveillance cameras. It supports multimodal tasks, including text-based person retrieval and human matching. One of the most significant challenges faced in Re-ID is clothes-changing, where the same person may appear in different outfits. While previous methods have made notable progress in maintaining clothing data consistency and handling clothing change data, they still rely excessively on clothing information, which can limit performance due to the dynamic nature of human appearances. To mitigate this challenge, we propose the Pose-Guidance Deep Supervision (PGDS), an effective framework for learning pose guidance within the Re-ID task. It consists of three modules: a human encoder, a pose encoder, and a Pose-to-Human Projection module (PHP). Our framework guides the human encoder, i.e., the main re-identification model, with pose information from the pose encoder through multiple layers via the knowledge transfer mechanism from the PHP module, helping the human encoder learn body parts information without increasing computation resources in the inference stage. Through extensive experiments, our method surpasses the performance of current state-of-the-art methods, demonstrating its robustness and effectiveness for real-world applications.
 
 <div align="center">
     <a href="./">
