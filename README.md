@@ -1,7 +1,7 @@
 
 # PGDS: Pose-Guided Deep Supervision for Mitigating Clothes-Changing in Person Re-Identification
 
-This is the official repository of the paper "**PGDS: Pose-Guided Deep Supervision for Mitigating Clothes-Changing in Person Re-Identification**" [![Arxiv Page](https://img.shields.io/badge/Arxiv-2312.05634-red?style=flat-square)](https://arxiv.org/abs/2312.05634) - **AVSS 2024**
+This is the official repository of the paper "**PGDS: Pose-Guided Deep Supervision for Mitigating Clothes-Changing in Person Re-Identification**" [![AVSS proceeding](https://img.shields.io/badge/IEEE-2312.05634-blue?style=flat-square)]([https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10672607]) - **AVSS 2024**
 
 <b>Authors:</b> Quoc-Huy Trinh, Nhat-Tan Bui, Dinh-Hieu Hoang, Phuoc-Thao Vo Thi, Hai-Dang Nguyen, Debesh Jha, Ulas Bagci, Ngan Le, Minh-Triet Tran
 
@@ -71,10 +71,12 @@ The result in test dataset can be found in our paper, below is the visualization
 
 ## Citation
 ```
-@article{pgs,
-      title={PGS: Pose-Guided Supervision for Mitigating Clothes-Changing in Person Re-Identification}, 
-      author={Quoc-Huy Trinh and Nhat-Tan Bui and Dinh-Hieu Hoang and Phuoc-Thao Vo Thi and Hai-Dang Nguyen and Debesh Jha and Ulas Bagci and Ngan Le and Minh-Triet Tran},
-      journal={arXiv:2312.05634},
-      year={2023}
+@inproceedings{trinh2024pgds,
+  title={PGDS: Pose-Guidance Deep Supervision for Mitigating Clothes-Changing in Person Re-Identification},
+  author={Trinh, Quoc-Huy and Bui, Nhat-Tan and Hoang, Dinh-Hieu and Thi, Phuoc-Thao Vo and Nguyen, Hai-Dang and Jha, Debesh and Bagci, Ulas and Le, Ngan and Tran, Minh-Triet},
+  booktitle={2024 IEEE International Conference on Advanced Video and Signal Based Surveillance (AVSS)},
+  pages={1--8},
+  year={2024},
+  organization={IEEE}
 }
 ```
