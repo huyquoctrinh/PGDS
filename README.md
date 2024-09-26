@@ -11,7 +11,7 @@ Person Re-Identification (Re-ID) task seeks to enhance the tracking of multiple 
 
 <div align="center">
     <a href="./">
-        <img src="Figure/newvis1.png" width="79%"/>
+        <img src="pgds.jpg" width="79%"/>
     </a>
 </div>
 
