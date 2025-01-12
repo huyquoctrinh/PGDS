@@ -1,7 +1,7 @@
 
 # PGDS: Pose-Guided Deep Supervision for Mitigating Clothes-Changing in Person Re-Identification
 
-This is the official repository of the paper "**PGDS: Pose-Guided Deep Supervision for Mitigating Clothes-Changing in Person Re-Identification**" [![AVSS proceeding](https://img.shields.io/badge/IEEE-2312.05634-blue?style=flat-square)](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10672607) - **AVSS 2024**
+This is the official repository of the paper "**PGDS: Pose-Guided Deep Supervision for Mitigating Clothes-Changing in Person Re-Identification**" [![AVSS proceeding](https://img.shields.io/badge/IEEE-2312.05634-blue?style=flat-square)](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10672607) - **AVSS 2024 (Oral Presentation)**
 
 <b>Authors:</b> Quoc-Huy Trinh, Nhat-Tan Bui, Dinh-Hieu Hoang, Phuoc-Thao Vo Thi, Hai-Dang Nguyen, Debesh Jha, Ulas Bagci, Ngan Le, Minh-Triet Tran
 
